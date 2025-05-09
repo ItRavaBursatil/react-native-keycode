@@ -49,25 +49,36 @@ export const KeycodeInput = (props) => {
   const renderBoxes = () => {
     let elements = [];
     let i = 0;
-    let vals = inputValue.split('');
+    // ⇢ dividir en caracteres, no en espacios
+    let vals = (inputValue ?? '').split('');
+  
     while (i < props.length) {
-      let active = i === inputValue.length;
-      let barStyles = [styles.bar, active ? [styles.barActive, { backgroundColor: props.tintColor }] : []];
-
+      // marca como activo justo la siguiente casilla
+      let active = i === (inputValue ?? '').length;
+  
+      let barStyles = [
+        styles.bar,
+        active
+          ? [styles.barActive, { backgroundColor: props.tintColor }]
+          : []
+      ];
+  
       elements.push(
         <View style={styles.box} key={i}>
           <Text style={[styles.text, { color: props.textColor }]}>
-            {vals[i] || ""}
+            {/* cada carácter en su casilla */}
+            {vals[i] ?? ""}
           </Text>
           <View style={barStyles} />
         </View>
       );
-
+  
       i++;
     }
-
+  
     return elements;
   };
+  
 
   let keyboardType = props.numeric ? 'numeric' : (Platform.OS === 'ios' ? 'ascii-capable' : 'default');
 
