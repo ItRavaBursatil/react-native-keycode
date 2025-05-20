@@ -24,15 +24,10 @@ export const KeycodeInput = (props) => {
 		let focusInterval = setInterval(() => {
 			if (localInputRef.current) {
 				localInputRef.current.focus();
-				console.log("✅ .focus() ejecutado con éxito");
 				clearInterval(focusInterval);
 			} else {
 				focusTries++;
-				console.log(`⏳ Esperando ref... intento ${focusTries}`);
 				if (focusTries > 10) {
-					console.log(
-						"❌ No se pudo enfocar el input después de 10 intentos"
-					);
 					clearInterval(focusInterval);
 				}
 			}
@@ -41,20 +36,16 @@ export const KeycodeInput = (props) => {
 	}, []);
 
 	const changeText = (value) => {
-		console.log("⌨️ Texto ingresado:", value);
-
 		if (props.uppercase) value = value.toUpperCase();
 		if (props.alphaNumeric) value = value.replace(/[^a-z0-9]/gi, "");
 
 		setInputValue(value);
 
 		if (props.onChange) {
-			console.log("📝 Llamando props.onChange");
 			props.onChange(value);
 		}
 
 		if (value.length >= props.length && props.onComplete) {
-			console.log("✅ Código completo → props.onComplete");
 			props.onComplete(value);
 		}
 	};
@@ -100,10 +91,6 @@ export const KeycodeInput = (props) => {
 				<TextInput
 					ref={(component) => {
 						localInputRef.current = component;
-						console.log(
-							"🔧 TextInput ref inicializado:",
-							!!component
-						);
 						if (props.inputRef) {
 							props.inputRef(component);
 						}
@@ -129,8 +116,6 @@ export const KeycodeInput = (props) => {
 					underlineColorAndroid="transparent"
 					onChangeText={changeText}
 					caretHidden
-					onFocus={() => console.log("🟢 onFocus ejecutado")}
-					onBlur={() => console.log("🔴 onBlur ejecutado")}
 				/>
 			</View>
 		</TouchableWithoutFeedback>
